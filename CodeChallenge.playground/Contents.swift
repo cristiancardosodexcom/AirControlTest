@@ -1,29 +1,5 @@
 import UIKit
 
-var greeting = "Hello, playground"
-
-var n = 4
-var m = 4
-
-//var aviones = [(2,0,"v"),(1,1,"v"),(0,2,">"),(2,2,"^")] //Test case 1
-//var aviones = [(3,1,"v"), (2,3,">"), (0,0,">")] //Test case 2
-//var aviones = [(2,1,"v"), (1,2,">"), (3,2,"<"), (2,3,"^")] //Test case 3
-//var aviones = [(0,0,">"),(0,2,"^"),(2,0,"<"),(2,2,"^")] //Test case 4
-//var aviones = [(0,0,">"),(0,2,">"),(0,3,">"),(2,0,"<"),(2,2,"<"),(2,3,"<")] //Test case 5
-var aviones = [(2,0,"v"),(1,1,">"),(3,1,"<"),(2,2,"^")] //Test case 5
-
-var originalBoard = [[String]](repeating: [String](repeating: "0", count: n), count: m)
-
-for col in 0...n-1 { //x
-    for ren in 0...m-1 { //y
-        for avion in aviones {
-            if avion.1 == col && avion.0 == ren {
-                originalBoard[ren][col] = avion.2
-            }
-        }
-    }
-}
-
 func printMatriz(_ matriz: [[String]]){
     for col in 0...n-1 { //x
         var line = ""
@@ -34,9 +10,6 @@ func printMatriz(_ matriz: [[String]]){
     }
 }
 
-var step = 0
-
-var colisiones = 0
 
 func isMatrixEmpty(_ matriz: [[String]]) -> Bool{
     for col in 0...n-1 { //x
@@ -50,6 +23,30 @@ func isMatrixEmpty(_ matriz: [[String]]) -> Bool{
     return true
 }
 
+//HERE PROGRAM STARTS
+
+var n = 4
+var m = 4
+
+//var aviones = [(2,0,"v"),(1,1,"v"),(0,2,">"),(2,2,"^")] //Test case 1
+//var aviones = [(3,1,"v"), (2,3,">"), (0,0,">")] //Test case 2
+//var aviones = [(2,1,"v"), (1,2,">"), (3,2,"<"), (2,3,"^")] //Test case 3
+//var aviones = [(0,0,">"),(0,2,"^"),(2,0,"<"),(2,2,"^")] //Test case 4
+//var aviones = [(0,0,">"),(0,2,">"),(0,3,">"),(2,0,"<"),(2,2,"<"),(2,3,"<")] //Test case 5
+var aviones = [(2,0,"v"),(1,1,">"),(3,1,"<"),(2,2,"^")] //Test case 6
+
+//INIT MATRIZ WITH ZERO ALL POSITIONS
+var originalBoard = [[String]](repeating: [String](repeating: "0", count: n), count: m)
+
+var step = 0
+var colisiones = 0
+
+//ADD PLANES TO MATRIX
+for avion in aviones {
+    originalBoard[avion.0][avion.1] = avion.2
+}
+
+//PRINT MATRIX CONTENT
 print("Original Old Board:")
 printMatriz(originalBoard)
 
@@ -57,6 +54,7 @@ repeat {
     
     step += 1
             
+    //TEMPORAL MATRIX
     var newBoard = [[String]](repeating: [String](repeating: "0", count: n), count: m)
         
     for j in 0...n-1 { //x
@@ -86,10 +84,7 @@ repeat {
                     }
                     
                     if newCoords.x >= 0 && newCoords.y >= 0 {
-                        if newBoard[newCoords.x][newCoords.y] == ">" ||
-                            newBoard[newCoords.x][newCoords.y] == "^" ||
-                            newBoard[newCoords.x][newCoords.y] == "<" ||
-                            newBoard[newCoords.x][newCoords.y] == "v" {
+                        if newBoard[newCoords.x][newCoords.y] != "0" {
                             newBoard[newCoords.x][newCoords.y] = "X"
                         } else {
                             newBoard[i][j] = "0"
